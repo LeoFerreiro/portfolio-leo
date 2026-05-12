@@ -86,7 +86,7 @@ function Hero() {
           </a>
 
           <a
-            href="https://www.linkedin.com/in/leonardo-ferreiro-8a033abb"
+            href="https://www.linkedin.com/in/leo-ferreiro"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-blue-400 transition"
