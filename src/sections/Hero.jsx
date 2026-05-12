@@ -86,11 +86,13 @@ function Hero() {
           </a>
 
           <a
-            href="#"
+            href="https://www.linkedin.com/in/leonardo-ferreiro-8a033abb"
+            target="_blank"
+            rel="noopener noreferrer"
             className="hover:text-blue-400 transition"
           >
-            <FaLinkedin />
-          </a>
+  <FaLinkedin />
+</a>
 
         </div>
       </motion.div>
