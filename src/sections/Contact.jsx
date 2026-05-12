@@ -86,7 +86,7 @@ const sendEmail = (e) => {
                 </p>
 
                 <h4 className="text-xl font-semibold">
-                  leonardo@email.com
+                  leoferreiro1@gmail.com
                 </h4>
               </div>
 
