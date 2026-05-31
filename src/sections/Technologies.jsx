@@ -82,7 +82,7 @@ function Technologies() {
   return (
     <section
       id="technologies"
-      className="min-h-screen flex items-center px-6 py-24"
+      className="min-h-screen flex flex-col text-center items-center px-6 py-24"
     >
       <motion.div
         initial={{ opacity: 0, y: 80 }}

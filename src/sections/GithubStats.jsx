@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 
 function GithubStats() {
   return (
-    <section className="px-6 py-24">
+    <section className="px-6 py-24 flex flex-col items-center text-center">
 
       <motion.div
         initial={{ opacity: 0, y: 80 }}

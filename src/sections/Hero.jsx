@@ -6,81 +6,251 @@ function Hero() {
   return (
     <section
       id="hero"
-      className="relative h-screen flex flex-col items-center justify-center
-      overflow-hidden px-6"
+      className="
+      relative
+      min-h-screen
+      overflow-hidden
+
+      flex
+      justify-center
+
+      px-6
+      pt-32
+      "
     >
-      {/* Glow background */}
-      <div className="absolute w-[500px] h-[500px] bg-blue-500/20 rounded-full blur-2xl top-[-100px] left-[-100px]" />
+      {/* Glow Azul */}
+      <div
+        className="
+        absolute
+        -top-64
+        -left-64
 
-      <div className="absolute w-[400px] h-[400px] bg-purple-500/20 rounded-full blur-2xl bottom-[-100px] right-[-100px]" />
+        w-[900px]
+        h-[900px]
 
-      {/* Content */}
+        rounded-full
+        bg-blue-500/10
+
+        blur-[180px]
+        pointer-events-none
+        "
+      />
+
+      {/* Glow Violeta */}
+      <div
+        className="
+        absolute
+
+        left-1/2
+        bottom-[-900px]
+
+        -translate-x-1/2
+
+        w-[2200px]
+        h-[2200px]
+
+        rounded-full
+        bg-purple-600/20
+
+        blur-[280px]
+        pointer-events-none
+        "
+      />
+
       <motion.div
-        initial={{ opacity: 0, y: 80 }}
+        initial={{ opacity: 0, y: 60 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
-        className="z-10 text-center"
-      >
-        <p className="text-blue-400 text-lg mb-4">
-          Hola, soy
-        </p>
+        className="
+        relative
+        z-10
 
+        w-full
+        max-w-5xl
+
+        flex
+        flex-col
+        items-center
+
+        text-center
+        "
+      >
+        {/* Badge */}
+        <div
+          className="
+          inline-flex
+          items-center
+
+          px-5
+          py-2
+
+          rounded-full
+
+          border
+          border-violet-500/20
+
+          bg-violet-500/10
+
+          text-violet-300
+          text-sm
+          font-medium
+
+          backdrop-blur-md
+
+          mb-8
+          "
+        >
+          🚀 Disponible para proyectos freelance
+        </div>
+
+        {/* Nombre */}
         <h1
-          className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-extrabold
-          bg-gradient-to-r from-blue-400 via-cyan-400 to-purple-500
-          bg-clip-text text-transparent"
+          className="
+          text-6xl
+          sm:text-7xl
+          md:text-8xl
+          lg:text-[120px]
+
+          font-black
+          leading-none
+
+          bg-gradient-to-r
+          from-blue-400
+          via-cyan-300
+          to-violet-500
+
+          bg-clip-text
+          text-transparent
+          "
         >
           Leonardo Ferreiro
         </h1>
 
-        <div className="mt-6 text-2xl md:text-4xl font-semibold text-white">
+        {/* Typing */}
+        <div
+          className="
+          mt-8
+
+          text-xl
+          md:text-3xl
+
+          font-semibold
+          text-white
+          "
+        >
           <TypeAnimation
             sequence={[
               "Full Stack Developer",
-              2000,
+              2500,
               "React Developer",
-              2000,
+              2500,
               "Frontend Specialist",
-              2000,
+              2500,
+              "Freelance Web Developer",
+              2500,
             ]}
-            wrapper="span"
             speed={50}
             repeat={Infinity}
           />
         </div>
 
-        <p className="max-w-2xl mx-auto text-gray-400
-           mt-8 text-base md:text-lg leading-8">
-          Desarrollo experiencias web modernas, rápidas y atractivas
-          utilizando tecnologías actuales como React, Node.js y MongoDB.
+        {/* Descripción */}
+        <p
+          className="
+          max-w-[620px]
+
+          mt-8
+
+          text-gray-400
+          text-lg
+
+          leading-9
+
+          text-center
+          "
+        >
+          Ayudo a negocios y emprendedores a transformar
+          ideas en productos digitales modernos, rápidos
+          y escalables utilizando React, Node.js y
+          tecnologías actuales.
         </p>
 
-        {/* Buttons */}
-        <div className="flex flex-col sm:flex-row
-             justify-center gap-4 mt-10">
-          
-          <button
-            className="px-8 py-4 rounded-full bg-blue-500
-            hover:bg-blue-600 transition font-semibold shadow-lg shadow-blue-500/30"
+        {/* Botones */}
+        <div
+          className="
+          flex
+          flex-col
+          sm:flex-row
+
+          gap-4
+
+          mt-12
+          "
+        >
+          <a
+            href="#projects"
+            className="
+            px-8 py-4
+
+            rounded-full
+
+            bg-violet-600
+            hover:bg-violet-700
+
+            text-white
+            font-semibold
+
+            transition
+
+            shadow-lg
+            shadow-violet-600/30
+            "
           >
             Ver Proyectos
-          </button>
+          </a>
 
-          <button
-            className="px-8 py-4 rounded-full border border-white/20
-            hover:border-blue-400 hover:text-blue-400 transition font-semibold"
+          <a
+            href="#contact"
+            className="
+            px-8 py-4
+
+            rounded-full
+
+            border border-white/10
+
+            hover:border-violet-400
+            hover:text-violet-400
+
+            transition
+
+            font-semibold
+            "
           >
             Contactarme
-          </button>
-
+          </a>
         </div>
 
-        {/* Socials */}
-        <div className="flex justify-center gap-6 mt-10 text-3xl">
-          
+        {/* Redes */}
+        <div
+          className="
+          flex
+          gap-6
+
+          mt-12
+
+          text-3xl
+          text-gray-400
+          "
+        >
           <a
-            href="#"
-            className="hover:text-blue-400 transition"
+            href="https://github.com/LeoFerreiro"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="
+            hover:text-white
+            hover:scale-110
+            transition
+            "
           >
             <FaGithub />
           </a>
@@ -89,11 +259,53 @@ function Hero() {
             href="https://www.linkedin.com/in/leo-ferreiro"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-blue-400 transition"
+            className="
+            hover:text-[#0A66C2]
+            hover:scale-110
+            transition
+            "
           >
-  <FaLinkedin />
-</a>
+            <FaLinkedin />
+          </a>
+        </div>
 
+        {/* Tecnologías */}
+        <div
+          className="
+          flex
+          flex-wrap
+          justify-center
+
+          gap-3
+
+          mt-12
+          "
+        >
+          {[
+            "React",
+            "Node.js",
+            "MongoDB",
+            "TailwindCSS",
+            "Framer Motion",
+          ].map((tech) => (
+            <span
+              key={tech}
+              className="
+              px-4
+              py-2
+
+              rounded-full
+
+              bg-white/5
+              border border-white/10
+
+              text-sm
+              text-gray-300
+              "
+            >
+              {tech}
+            </span>
+          ))}
         </div>
       </motion.div>
     </section>

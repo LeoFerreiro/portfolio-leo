@@ -33,7 +33,7 @@ const sendEmail = (e) => {
   return (
     <section
       id="contact"
-      className="min-h-screen px-6 py-24 flex items-center"
+      className="min-h-screen px-6 py-24 flex flex-col text-center items-center"
     >
       <div className="max-w-6xl mx-auto w-full">
 
@@ -43,7 +43,7 @@ const sendEmail = (e) => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="text-center mb-20"
+          className="text-center mb-20 items-center flex flex-col"
         >
 
           <p className="text-blue-400 font-semibold mb-4">
@@ -54,7 +54,7 @@ const sendEmail = (e) => {
             Trabajemos juntos
           </h2>
 
-          <p className="text-gray-400 mt-6 max-w-2xl mx-auto">
+          <p className="text-gray-400 mt-6 max-w-2xl mx-auto text-center flex flex-col">
             ¿Tenés una idea, proyecto o necesitás una página web moderna?
             Estoy disponible para proyectos freelance y colaboraciones.
           </p>
@@ -103,24 +103,24 @@ const sendEmail = (e) => {
             </div>
 
             {/* Socials */}
-            <div className="flex gap-6 mt-10 text-3xl">
+            <div className="flex flex-col gap-6 mt-10 text-3xl items-center">
 
               <a
-                href="#"
+                href="https://github.com/LeoFerreiro"
                 className="hover:text-blue-400 transition"
               >
                 <FaGithub />
               </a>
 
               <a
-                href="#"
+                href="https://www.linkedin.com/in/leo-ferreiro/"
                 className="hover:text-blue-400 transition"
               >
                 <FaLinkedin />
               </a>
 
               <a
-                href="#"
+                href="https://wa.me/5491133849214"
                 className="hover:text-green-400 transition"
               >
                 <FaWhatsapp />

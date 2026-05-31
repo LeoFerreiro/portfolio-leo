@@ -4,12 +4,20 @@ import { FiExternalLink } from "react-icons/fi";
 
 const projects = [
   {
-    title: "Modern Ecommerce",
+    title: "LeoStore",
     description:
-      "Ecommerce moderno desarrollado con React, Node.js y MongoDB con carrito, login y diseño responsive.",
-    technologies: ["React", "Node.js", "MongoDB"],
-    image:
-      "https://images.unsplash.com/photo-1522204523234-8729aa6e3d5f?q=80&w=1200&auto=format&fit=crop",
+      "E-commerce moderno desarrollado con React, Context API, React Router, TailwindCSS y Framer Motion. Incluye catálogo dinámico, carrito lateral animado, checkout, filtros, búsqueda y modo oscuro.",
+    technologies: [
+      "React",
+      "TailwindCSS",
+      "Context API",
+      "Framer Motion",
+      "Vite",
+    ],
+    image: "/leostore.png",
+
+    demo: "https://storeleo.vercel.app/",
+    github: "https://github.com/LeoFerreiro/ecommerce-leo",
   },
 
   {
@@ -35,7 +43,7 @@ function Projects() {
   return (
     <section
       id="projects"
-      className="min-h-screen flex items-center px-6 py-24"
+      className="min-h-screen flex flex-col text-center items-center px-6 py-24"
     >
       <div className="max-w-7xl mx-auto">
 
@@ -45,7 +53,12 @@ function Projects() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="text-center mb-20"
+          className="text-center 
+          mb-20 
+          flex 
+          flex-col 
+          items-center 
+          text-center"
         >
 
           <p className="text-blue-400 font-semibold mb-4">
@@ -136,24 +149,39 @@ function Projects() {
                   {/* Buttons */}
                   <div className="flex gap-4 mt-auto pt-8">
 
-                    <button
-                      className="flex items-center gap-2
-                      px-5 py-3 rounded-full bg-blue-500
-                      hover:bg-blue-600 transition font-medium"
+                    <a
+                      href={project.demo}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="
+                      flex items-center gap-2
+                      px-5 py-3 rounded-full
+                      bg-blue-500
+                      hover:bg-blue-600
+                      transition
+                      font-medium
+                      "
                     >
                       <FiExternalLink />
-                      Demo
-                    </button>
+                        Demo
+                    </a>
 
-                    <button
-                      className="flex items-center gap-2
-                      px-5 py-3 rounded-full border
-                      border-white/10 hover:border-blue-400
-                      transition font-medium"
+                    <a
+                      href={project.github}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="
+                      flex items-center gap-2
+                      px-5 py-3 rounded-full
+                      border border-white/10
+                      hover:border-blue-400
+                      transition
+                      font-medium
+                      "
                     >
                       <FaGithub />
-                      GitHub
-                    </button>
+                        GitHub
+                    </a>
 
                   </div>
 

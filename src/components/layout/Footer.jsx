@@ -31,24 +31,24 @@ function Footer() {
         </div>
 
         {/* Socials */}
-        <div className="flex gap-6 text-2xl">
+        <div className="flex gap-6 text-2xl items-center">
 
           <a
-            href="#"
+            href="https://github.com/LeoFerreiro"
             className="hover:text-blue-400 transition"
           >
             <FaGithub />
           </a>
 
           <a
-            href="#"
+            href="https://www.linkedin.com/in/leo-ferreiro/"
             className="hover:text-blue-400 transition"
           >
             <FaLinkedin />
           </a>
 
           <a
-            href="#"
+            href="https://wa.me/5491133849214"
             className="hover:text-green-400 transition"
           >
             <FaWhatsapp />
