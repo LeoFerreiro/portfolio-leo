@@ -15,22 +15,18 @@ const projects = [
       "Vite",
     ],
     image: "/leostore.png",
-
     demo: "https://storeleo.vercel.app/",
     github: "https://github.com/LeoFerreiro/ecommerce-leo",
   },
-
   {
     title: "Task Manager App",
     description:
       "Aplicación full stack para gestión de tareas con autenticación y persistencia de datos.",
     technologies: ["React", "Express", "MongoDB"],
-    image:"/taskflowleo.png",
-
-      demo:"https://taskleodemo.vercel.app/",
-      github: "https://github.com/LeoFerreiro/taskflow",
+    image: "/taskflowleo.png",
+    demo: "https://taskleodemo.vercel.app/",
+    github: "https://github.com/LeoFerreiro/taskflow",
   },
-
   {
     title: "Business Landing Page",
     description:
@@ -48,21 +44,13 @@ function Projects() {
       className="min-h-screen flex flex-col text-center items-center px-6 py-24"
     >
       <div className="max-w-7xl mx-auto">
-
-        {/* Title */}
         <motion.div
           initial={{ opacity: 0, y: 80 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="text-center 
-          mb-20 
-          flex 
-          flex-col 
-          items-center 
-          text-center"
+          className="mb-20 flex flex-col items-center text-center"
         >
-
           <p className="text-blue-400 font-semibold mb-4">
             Proyectos
           </p>
@@ -75,12 +63,9 @@ function Projects() {
             Algunos proyectos desarrollados enfocados en diseño moderno,
             experiencia de usuario y desarrollo full stack.
           </p>
-
         </motion.div>
 
-        {/* Projects Grid */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-
           {projects.map((project, index) => (
             <motion.div
               key={project.title}
@@ -94,36 +79,18 @@ function Projects() {
               whileHover={{ y: -10 }}
               className="group relative"
             >
+              <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-blue-500/20 to-purple-500/20 blur-xl opacity-0 group-hover:opacity-100 transition" />
 
-              {/* Glow */}
-              <div
-                className="absolute inset-0 rounded-3xl
-                bg-gradient-to-r from-blue-500/20
-                to-purple-500/20 blur-xl opacity-0
-                group-hover:opacity-100 transition"
-              />
-
-              {/* Card */}
-              <div
-                className="relative bg-[#111827]/80
-                border border-white/10 rounded-3xl
-                overflow-hidden backdrop-blur-md
-                flex flex-col h-full hover-card"
-              >
-
-                {/* Image */}
+              <div className="relative bg-[#111827]/80 border border-white/10 rounded-3xl overflow-hidden backdrop-blur-md flex flex-col h-full hover-card">
                 <div className="overflow-hidden">
                   <img
                     src={project.image}
                     alt={project.title}
-                    className="w-full h-52 object-cover
-                    group-hover:scale-105 transition duration-500"
+                    className="w-full h-52 object-cover group-hover:scale-105 transition duration-500"
                   />
                 </div>
 
-                {/* Content */}
                 <div className="p-8 flex flex-col flex-1">
-
                   <h3 className="text-2xl font-bold mb-4">
                     {project.title}
                   </h3>
@@ -132,66 +99,48 @@ function Projects() {
                     {project.description}
                   </p>
 
-                  {/* Technologies */}
                   <div className="flex flex-wrap gap-3 mt-6">
-
                     {project.technologies.map((tech) => (
                       <span
                         key={tech}
-                        className="px-4 py-2 rounded-full
-                        bg-blue-500/10 border border-blue-400/20
-                        text-blue-300 text-sm"
+                        className="px-4 py-2 rounded-full bg-blue-500/10 border border-blue-400/20 text-blue-300 text-sm"
                       >
                         {tech}
                       </span>
                     ))}
-
                   </div>
 
-                  {/* Buttons */}
-                  <div className="flex gap-4 mt-auto pt-8">
+                  {(project.demo || project.github) && (
+                    <div className="flex gap-4 mt-auto pt-8">
+                      {project.demo && (
+                        <a
+                          href={project.demo}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="flex items-center gap-2 px-5 py-3 rounded-full bg-blue-500 hover:bg-blue-600 transition font-medium"
+                        >
+                          <FiExternalLink />
+                          Demo
+                        </a>
+                      )}
 
-                    <a
-                      href={project.demo}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="
-                      flex items-center gap-2
-                      px-5 py-3 rounded-full
-                      bg-blue-500
-                      hover:bg-blue-600
-                      transition
-                      font-medium
-                      "
-                    >
-                      <FiExternalLink />
-                        Demo
-                    </a>
-
-                    <a
-                      href={project.github}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="
-                      flex items-center gap-2
-                      px-5 py-3 rounded-full
-                      border border-white/10
-                      hover:border-blue-400
-                      transition
-                      font-medium
-                      "
-                    >
-                      <FaGithub />
-                        GitHub
-                    </a>
-
-                  </div>
-
+                      {project.github && (
+                        <a
+                          href={project.github}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="flex items-center gap-2 px-5 py-3 rounded-full border border-white/10 hover:border-blue-400 transition font-medium"
+                        >
+                          <FaGithub />
+                          GitHub
+                        </a>
+                      )}
+                    </div>
+                  )}
                 </div>
               </div>
             </motion.div>
           ))}
-
         </div>
       </div>
     </section>
