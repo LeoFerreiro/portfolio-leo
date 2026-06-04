@@ -101,13 +101,14 @@ button:active {
 
 .hero-3d-scene {
   position: absolute;
-  inset: 8% -8% auto auto;
+  top: 8%;
+  right: max(3%, calc((100vw - 1280px) / 2));
   z-index: 1;
-  width: min(48vw, 620px);
-  height: min(52vw, 620px);
+  width: min(44vw, 580px);
+  height: min(48vw, 580px);
   min-width: 340px;
   min-height: 340px;
-  opacity: 0.58;
+  opacity: 0.54;
   pointer-events: auto;
   filter: drop-shadow(0 0 42px rgba(56, 189, 248, 0.2));
   mask-image: radial-gradient(circle, black 58%, transparent 76%);
