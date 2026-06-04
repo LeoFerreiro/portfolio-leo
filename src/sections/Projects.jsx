@@ -4,7 +4,7 @@ import { FiExternalLink } from "react-icons/fi";
 
 const projects = [
   {
-    title: "LeoStore",
+    title: "VerdeStore",
     description:
       "E-commerce moderno desarrollado con React, Context API, React Router, TailwindCSS y Framer Motion. Incluye catálogo dinámico, carrito lateral animado, checkout, filtros, búsqueda y modo oscuro.",
     technologies: [
