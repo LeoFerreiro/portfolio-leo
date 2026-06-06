@@ -33,7 +33,7 @@ const projects = [
       "Landing page premium enfocada en negocios modernos con diseño creativo y animaciones suaves.",
     technologies: ["React", "Tailwind", "Framer Motion"],
     image:
-      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1200&auto=format&fit=crop",
+      "/blpleo.png",
       demo: "https://blp-leo.vercel.app/",
       github:"https://github.com/LeoFerreiro/blp-leo",
   },
