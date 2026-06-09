@@ -42,8 +42,8 @@ const projects = [
     description:
       "Ticketera demo para recitales y shows en vivo con cola virtual, registro validado, checkout simulado, panel de usuario, Mis tickets y flujo de arrepentimiento de compra sin persistencia de datos.",
     technologies: ["HTML", "CSS", "JavaScript", "Vercel"],
-    image: "/nocheviva.png",
-    demo: "https://buyticket-leo.vercel.app/",
+    image: "/buyticket.png",
+    demo: "https://buytecket-leo.vercel.app/",
     github: "https://github.com/LeoFerreiro/buyticket-leo",
   },
 ];
