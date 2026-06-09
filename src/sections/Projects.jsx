@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+﻿import { motion } from "framer-motion";
 import { FaGithub } from "react-icons/fa";
 import { FiExternalLink } from "react-icons/fi";
 
@@ -6,7 +6,7 @@ const projects = [
   {
     title: "VerdeStore",
     description:
-      "E-commerce moderno desarrollado con React, Context API, React Router, TailwindCSS y Framer Motion. Incluye catálogo dinámico, carrito lateral animado, checkout, filtros, búsqueda y modo oscuro.",
+      "E-commerce moderno desarrollado con React, Context API, React Router, TailwindCSS y Framer Motion. Incluye catÃ¡logo dinÃ¡mico, carrito lateral animado, checkout, filtros, bÃºsqueda y modo oscuro.",
     technologies: [
       "React",
       "TailwindCSS",
@@ -21,7 +21,7 @@ const projects = [
   {
     title: "Task Manager App",
     description:
-      "Aplicación full stack para gestión de tareas con autenticación y persistencia de datos.",
+      "AplicaciÃ³n full stack para gestiÃ³n de tareas con autenticaciÃ³n y persistencia de datos.",
     technologies: ["React", "Express", "MongoDB"],
     image: "/taskflowleo.png",
     demo: "https://taskleodemo.vercel.app/",
@@ -30,12 +30,21 @@ const projects = [
   {
     title: "Business Landing Page",
     description:
-      "Landing page premium enfocada en negocios modernos con diseño creativo y animaciones suaves.",
+      "Landing page premium enfocada en negocios modernos con diseÃ±o creativo y animaciones suaves.",
     technologies: ["React", "Tailwind", "Framer Motion"],
     image:
       "/blpleo.png",
       demo: "https://blp-leo.vercel.app/",
       github:"https://github.com/LeoFerreiro/blp-leo",
+  },
+  {
+    title: "NocheViva",
+    description:
+      "Ticketera demo para recitales y shows en vivo con cola virtual, registro validado, checkout simulado, panel de usuario, Mis tickets y flujo de arrepentimiento de compra sin persistencia de datos.",
+    technologies: ["HTML", "CSS", "JavaScript", "Vercel"],
+    image: "/nocheviva.png",
+    demo: "https://buyticket-leo.vercel.app/",
+    github: "https://github.com/LeoFerreiro/buyticket-leo",
   },
 ];
 
@@ -62,7 +71,7 @@ function Projects() {
           </h2>
 
           <p className="text-gray-400 mt-6 max-w-2xl mx-auto">
-            Algunos proyectos desarrollados enfocados en diseño moderno,
+            Algunos proyectos desarrollados enfocados en diseÃ±o moderno,
             experiencia de usuario y desarrollo full stack.
           </p>
         </motion.div>
@@ -150,3 +159,5 @@ function Projects() {
 }
 
 export default Projects;
+
+
