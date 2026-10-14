@@ -1,4 +1,4 @@
-﻿import { motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { FaGithub } from "react-icons/fa";
 import { FiExternalLink } from "react-icons/fi";
 
@@ -6,7 +6,7 @@ const projects = [
   {
     title: "VerdeStore",
     description:
-      "E-commerce moderno desarrollado con React, Context API, React Router, TailwindCSS y Framer Motion. Incluye catÃ¡logo dinÃ¡mico, carrito lateral animado, checkout, filtros, bÃºsqueda y modo oscuro.",
+      "E-commerce moderno desarrollado con React, Context API, React Router, TailwindCSS y Framer Motion. Incluye catálogo dinámico, carrito lateral animado, checkout, filtros, búsqueda y modo oscuro.",
     technologies: [
       "React",
       "TailwindCSS",
@@ -21,7 +21,7 @@ const projects = [
   {
     title: "Task Manager App",
     description:
-      "AplicaciÃ³n full stack para gestiÃ³n de tareas con autenticaciÃ³n y persistencia de datos.",
+      "Aplicación full stack para gestión de tareas con autenticación y persistencia de datos.",
     technologies: ["React", "Express", "MongoDB"],
     image: "/taskflowleo.png",
     demo: "https://taskleodemo.vercel.app/",
@@ -30,7 +30,7 @@ const projects = [
   {
     title: "Business Landing Page",
     description:
-      "Landing page premium enfocada en negocios modernos con diseÃ±o creativo y animaciones suaves.",
+      "Landing page premium enfocada en negocios modernos con diseño creativo y animaciones suaves.",
     technologies: ["React", "Tailwind", "Framer Motion"],
     image:
       "/blpleo.png",
@@ -54,7 +54,7 @@ function Projects() {
       id="projects"
       className="min-h-screen flex flex-col text-center items-center px-6 py-24"
     >
-      <div className="max-w-7xl mx-auto">
+      <div className="w-full max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 80 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -71,7 +71,7 @@ function Projects() {
           </h2>
 
           <p className="text-gray-400 mt-6 max-w-2xl mx-auto">
-            Algunos proyectos desarrollados enfocados en diseÃ±o moderno,
+            Algunos proyectos desarrollados enfocados en diseño moderno,
             experiencia de usuario y desarrollo full stack.
           </p>
         </motion.div>
@@ -122,7 +122,7 @@ function Projects() {
                   </div>
 
                   {(project.demo || project.github) && (
-                    <div className="flex gap-4 mt-auto pt-8">
+                    <div className="flex flex-wrap gap-4 mt-auto pt-8">
                       {project.demo && (
                         <a
                           href={project.demo}

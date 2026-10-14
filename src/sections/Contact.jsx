@@ -75,7 +75,7 @@ function Contact() {
                   Email
                 </p>
 
-                <h4 className="text-xl font-semibold">
+                <h4 className="text-xl font-semibold wrap-anywhere">
                   leoferreiro1@gmail.com
                 </h4>
               </div>
@@ -85,7 +85,7 @@ function Contact() {
                   Ubicación
                 </p>
 
-                <h4 className="text-xl font-semibold">
+                <h4 className="text-xl font-semibold wrap-anywhere">
                   Buenos Aires, Argentina
                 </h4>
               </div>
