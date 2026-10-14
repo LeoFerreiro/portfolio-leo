@@ -683,3 +683,64 @@
     .case-media-and-overview { margin-top: 24px; }
   }
 }
+
+/* Editorial close: contact and footer, without animated entrance states. */
+@layer components {
+  .editorial-contact, .editorial-footer { position: relative; isolation: isolate; background: #070809; color: #f2f1ed; font-family: 'Poppins Eclipse', sans-serif; }
+  .editorial-contact { padding: 112px 80px 80px; scroll-margin-top: 24px; }
+  .contact-page { max-width: 1280px; margin-inline: auto; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 24px; }
+  .contact-introduction { grid-column: 1 / 6; }
+  .contact-kicker { font-size: 13px; color: #afb3b5; margin-bottom: 24px; letter-spacing: 0.045em; }
+  .contact-introduction h2 { font-size: clamp(42px, 4.65vw, 68px); line-height: 1.12; font-weight: 600; letter-spacing: -0.055em; }
+  .contact-invitation { max-width: 38ch; color: #b9bdc0; font-size: 17px; line-height: 1.75; margin-top: 28px; }
+  .contact-information { margin-top: 40px; display: grid; gap: 24px; }
+  .contact-information dt { font-size: 12px; color: #afb3b5; margin-bottom: 4px; }
+  .contact-information dd { font-size: 16px; line-height: 1.7; overflow-wrap: anywhere; }
+  .contact-channels { display: flex; flex-wrap: wrap; gap: 8px 24px; list-style: none; margin-top: 24px; }
+  .editorial-contact a, .editorial-footer a { display: inline-flex; align-items: center; min-height: 44px; font-size: 14px; text-decoration: underline; text-underline-offset: 6px; }
+  .editorial-contact :is(a, input, textarea, button):focus-visible,
+  .editorial-footer a:focus-visible { outline: 2px solid #f2f1ed; outline-offset: 4px; }
+  .contact-form-column { grid-column: 7 / -1; min-width: 0; padding-top: 2px; }
+  .contact-form-column form { display: grid; gap: 24px; }
+  .contact-field label { display: block; font-size: 14px; margin-bottom: 12px; }
+  .contact-field input, .contact-field textarea { display: block; width: 100%; min-width: 0; padding: 14px 16px; border: 1px solid #646d73; border-radius: 3px; background: #0d1012; color: #f2f1ed; font: inherit; font-size: 16px; line-height: 1.6; }
+  .contact-field textarea { resize: vertical; min-height: 180px; }
+  .contact-field :is(input, textarea)::placeholder { color: #a6aaad; opacity: 1; }
+  .contact-field [aria-invalid="true"] { border-color: #f2f1ed; }
+  .contact-form-column button { justify-self: start; min-height: 52px; padding: 14px 24px; border: 1px solid #f2f1ed; border-radius: 3px; background: #f2f1ed; color: #070809; font-size: 14px; font-weight: 500; }
+  .contact-form-column button:hover:not(:disabled) { background: #d8d9d8; border-color: #d8d9d8; }
+  .contact-form-column button:disabled { cursor: wait; color: #2e3336; background: #b9bdc0; border-color: #b9bdc0; }
+  .contact-feedback { min-height: 48px; font-size: 14px; line-height: 1.7; margin-top: 16px; }
+  .contact-field-error { margin-top: 8px; font-size: 14px; line-height: 1.6; }
+  .editorial-footer { border-top: 1px solid #353a3e; padding: 32px 80px; }
+  .footer-page { max-width: 1280px; margin-inline: auto; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: start; gap: 24px; }
+  .footer-brand { font-size: 22px; font-weight: 600; letter-spacing: -0.04em; }
+  .footer-brand span { color: #b9bdc0; }
+  .footer-identity > p + p { color: #afb3b5; font-size: 13px; margin-top: 6px; }
+  .editorial-footer ul { display: flex; flex-wrap: wrap; gap: 8px 24px; list-style: none; }
+  .editorial-footer a { color: #b9bdc0; font-size: 13px; }
+  .footer-copyright { grid-column: 1 / -1; color: #afb3b5; font-size: 12px; line-height: 1.7; }
+  @media (max-width: 1099px) {
+    .editorial-contact { padding: 88px 40px 64px; }
+    .contact-introduction { grid-column: 1 / 7; }
+    .editorial-footer { padding-inline: 40px; }
+  }
+  @media (max-width: 799px) {
+    .contact-page { grid-template-columns: 1fr; gap: 40px; }
+    .contact-introduction, .contact-form-column { grid-column: 1; }
+    .contact-introduction h2 { font-size: 48px; }
+    .contact-invitation { max-width: 55ch; }
+    .contact-information { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); margin-top: 28px; }
+    .contact-channels { margin-top: 16px; }
+  }
+  @media (max-width: 599px) {
+    .editorial-contact { padding: 64px 24px 48px; }
+    .contact-introduction h2 { font-size: clamp(32px, 9.7vw, 42px); }
+    .contact-invitation { font-size: 16px; margin-top: 24px; }
+    .contact-information { grid-template-columns: 1fr; gap: 20px; }
+    .contact-form-column button { width: 100%; justify-content: center; }
+    .editorial-footer { padding: 28px 24px; }
+    .footer-page { grid-template-columns: 1fr; gap: 20px; }
+    .editorial-footer ul { gap: 8px 20px; }
+  }
+}
