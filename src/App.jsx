@@ -8,25 +8,8 @@ import Footer from "./components/layout/Footer";
 import WhatsAppButton from "./components/ui/WhatsAppButton";
 import ParticlesBackground from "./components/ui/ParticlesBackground";
 import CursorGlow from "./components/ui/CursorGlow";
-import Loader from "./components/ui/Loader";
-import { useEffect, useState } from "react";
 
 function App() {
-
-  const [loading, setLoading] = useState(true);
-
-useEffect(() => {
-  const timer = setTimeout(() => {
-    setLoading(false);
-  }, 2000);
-
-  return () => clearTimeout(timer);
-}, []);
-
-if (loading) {
-  return <Loader />;
-}
-
   return (
     <div className="bg-[#020617] text-white overflow-hidden">
 
