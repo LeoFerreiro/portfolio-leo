@@ -578,6 +578,11 @@
 
 /* Mobile navigation refinement: an opaque surface, with contact in the menu. */
 @layer components {
+  /* A 1280px content width leaves a safe gutter for the 70px control at 1536px+. */
+  .floating-whatsapp { display: none; }
+  @media (min-width: 1536px) {
+    .floating-whatsapp { display: inline-flex; }
+  }
   .floating-whatsapp:focus-visible { outline: 2px solid #f2f1ed; outline-offset: 4px; }
   .navigation-mobile { background: #070809; }
   .navigation-whatsapp { margin-top: 16px; padding-top: 16px; border-top: 1px solid #353a3e; }
@@ -585,7 +590,6 @@
     .portfolio-navigation.is-open { height: 100dvh; display: flex; flex-direction: column; }
     .portfolio-navigation.is-open .navigation-inner { width: 100%; flex-shrink: 0; }
     .portfolio-navigation.is-open .navigation-mobile { flex: 1; min-height: 0; max-height: none; overscroll-behavior: contain; }
-    .floating-whatsapp { display: none; }
   }
 }
 
