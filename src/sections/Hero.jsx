@@ -19,7 +19,6 @@ function Hero() {
 
   return (
     <section ref={heroRef} id="hero" className="eclipse-hero" aria-labelledby="eclipse-name">
-      <div className="eclipse-sky" aria-hidden="true" />
       <div className="eclipse-moon" aria-hidden="true">
         <div className="eclipse-moon-frame">
           <picture>

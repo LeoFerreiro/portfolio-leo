@@ -8,13 +8,10 @@ import Contact from "./sections/Contact";
 import Footer from "./components/layout/Footer";
 import WhatsAppButton from "./components/ui/WhatsAppButton";
 import ParticlesBackground from "./components/ui/ParticlesBackground";
-import CursorGlow from "./components/ui/CursorGlow";
 
 function App() {
   return (
-    <div className="bg-[#020617] text-white overflow-hidden">
-
-      <CursorGlow />
+    <div className="portfolio-shell text-white overflow-hidden">
 
       <ParticlesBackground />
 

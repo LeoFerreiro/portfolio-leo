@@ -48,3 +48,10 @@ Credit: NASA / SVS, Lunar Reconnaissance Orbiter (LROC and LOLA); WebP distribut
 `moon-render-desktop.webp` (1600×1598) and `moon-render-mobile.webp` (640×639) are local raster derivatives of the approved `src/components/ui/lunarScene.js` renderer, not a new photograph. Generated in Chromium / SwiftShader with the existing 2k and 1k color/elevation maps respectively, the same orthographic camera, fixed orientation, light, material and grayscale presentation. Transparent PNG canvas captures were encoded as WebP quality 94, method 6, retaining alpha. No new third-party imagery or generated replacement imagery was used. Source-map credits and the mirror provenance limitation above apply equally to these rendered derivatives.
 
 The NASA SVS reference https://svs.gsfc.nasa.gov/4720/ was checked again on 2026-10-14: the environment proxy rejected the CONNECT request with HTTP 403. Direct verification of the original NASA files remains unavailable; no independent verification is claimed. Original photo assets remain in the repository for traceability but are no longer the Hero's active fallback.
+
+
+## Continuous editorial sky (Stage 4.7.2)
+
+`space-stars.svg` (1920 × 2800, 1900 points, seed 47220) and `space-stars-mobile.svg` (600 × 2800, 850 points, seed 47221) are original procedural SVG point fields prepared for this portfolio. Uniform irregular points and soft Gaussian concentrations vary radius, opacity and neutral/cool-white color, with quieter areas near the text. No external imagery, nebula photograph, copied design, AI-generated image, or NASA texture is used for these star fields. Existing original star SVGs remain for traceability. The atmospheric tint and continuous black fade are CSS gradients, with no animation or particle engine. Moon assets and their provenance limitations above remain unchanged.
+
+Stage 4.7.2.1 refines these same original procedural fields: increased upper-field density, varied radii (0.4–2.15 SVG units), and modestly brighter stars. Seeds and dimensions are unchanged; no third-party resources added.

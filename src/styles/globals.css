@@ -8,10 +8,7 @@
 
   body {
     font-family: 'Poppins', sans-serif;
-    background:
-      radial-gradient(circle at 20% 10%, rgba(37, 99, 235, 0.12), transparent 34%),
-      radial-gradient(circle at 82% 22%, rgba(124, 58, 237, 0.14), transparent 32%),
-      #020617;
+    background: #070809;
     color: white;
     overflow-x: hidden;
     text-rendering: optimizeLegibility;
@@ -245,24 +242,18 @@
     min-height: 900px;
     min-height: max(900px, 100svh);
     padding: 160px 80px 48px;
-    background: #070809;
+    background: transparent;
     color: #f2f1ed;
     font-family: 'Poppins Eclipse', 'Poppins', sans-serif;
     scroll-margin-top: 96px;
   }
 
-  .eclipse-sky,
   .eclipse-moon {
     position: absolute;
     inset: 0;
     overflow: clip;
     pointer-events: none;
     z-index: 0;
-  }
-
-  .eclipse-sky {
-    background: url('/hero/stars.svg') center top / cover no-repeat;
-    opacity: 0.75;
   }
 
   .eclipse-moon-frame {
@@ -463,7 +454,6 @@
     .eclipse-footnote { grid-template-columns: minmax(0, 1fr); gap: 24px; margin-top: 32px; padding-top: 20px; }
     .eclipse-meta-label { margin-bottom: 8px; }
     .eclipse-specialties, .eclipse-stack { gap: 4px 14px; }
-    .eclipse-sky { background-image: url('/hero/stars-mobile.svg'); background-size: 100% auto; background-position: center top; opacity: 0.75; }
   }
 
   @media (max-width: 359px) {
@@ -503,14 +493,9 @@
   .portfolio-navigation :is(a, button):focus-visible,
   .editorial-about a:focus-visible { outline: 2px solid #f2f1ed; outline-offset: 4px; }
   .editorial-about {
-    position: relative; isolation: isolate; background: #070809;
+    position: relative; isolation: isolate; background: transparent;
     color: #f2f1ed; font-family: 'Poppins Eclipse', sans-serif;
     padding: 112px 80px 96px; scroll-margin-top: 24px;
-  }
-  .editorial-about::before {
-    content: ''; position: absolute; top: 0; right: 0; width: 45%; height: 180px;
-    background: url('/hero/stars.svg') right top / 700px auto no-repeat;
-    opacity: 0.18; pointer-events: none; z-index: -1;
   }
   .about-page { max-width: 1280px; margin-inline: auto; }
   .about-opening { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 24px; }
@@ -595,7 +580,7 @@
 
 /* Projects: one editorial case, followed by the three existing demo cards. */
 @layer components {
-  .editorial-projects { position: relative; isolation: isolate; background: #070809; color: #f2f1ed; font-family: 'Poppins Eclipse', sans-serif; padding: 112px 80px 96px; scroll-margin-top: 24px; }
+  .editorial-projects { position: relative; isolation: isolate; background: transparent; color: #f2f1ed; font-family: 'Poppins Eclipse', sans-serif; padding: 112px 80px 96px; scroll-margin-top: 24px; }
   .projects-page { max-width: 1280px; margin-inline: auto; }
   .projects-opening { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 24px; align-items: end; margin-bottom: 80px; }
   .projects-opening > div { grid-column: 1 / 7; }
@@ -688,7 +673,7 @@
 
 /* Editorial close: contact and footer, without animated entrance states. */
 @layer components {
-  .editorial-contact, .editorial-footer { position: relative; isolation: isolate; background: #070809; color: #f2f1ed; font-family: 'Poppins Eclipse', sans-serif; }
+  .editorial-contact, .editorial-footer { position: relative; isolation: isolate; background: transparent; color: #f2f1ed; font-family: 'Poppins Eclipse', sans-serif; }
   .editorial-contact { padding: 112px 80px 80px; scroll-margin-top: 24px; }
   .contact-page { max-width: 1280px; margin-inline: auto; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 24px; }
   .contact-introduction { grid-column: 1 / 6; }
@@ -750,7 +735,7 @@
 
 /* Verified training: editorial entries with public verification links only. */
 @layer components {
-  .editorial-certifications { position: relative; background: #070809; color: #f2f1ed; font-family: 'Poppins Eclipse', sans-serif; padding: 96px 80px; scroll-margin-top: 24px; }
+  .editorial-certifications { position: relative; background: transparent; color: #f2f1ed; font-family: 'Poppins Eclipse', sans-serif; padding: 96px 80px; scroll-margin-top: 24px; }
   .certifications-page { max-width: 1280px; margin-inline: auto; }
   .certifications-opening { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 24px; align-items: end; margin-bottom: 56px; }
   .certifications-opening > div { grid-column: 1 / 7; }
@@ -794,5 +779,32 @@
     .certifications-opening h2 { font-size: clamp(32px, 9.7vw, 42px); }
     .certification-copy h3 { font-size: 24px; }
     .certification-institution { font-size: 15px; }
+  }
+}
+
+
+/* A single document-bound sky, fading to the shared black surface. No scroll work. */
+@layer components {
+  .portfolio-shell { position: relative; isolation: isolate; background: #070809; }
+  .portfolio-shell > main, .portfolio-shell > footer { position: relative; z-index: 1; }
+  .eclipse-atmosphere {
+    position: absolute; inset: 0 0 auto; height: clamp(2200px, 240svh, 2800px);
+    z-index: 0; overflow: clip; contain: paint; pointer-events: none; user-select: none;
+  }
+  .eclipse-atmosphere::before, .eclipse-atmosphere::after, .space-stars { position: absolute; inset: 0; pointer-events: none; }
+  .eclipse-atmosphere::before {
+    content: '';
+    background:
+      radial-gradient(ellipse 65% 35% at 78% 14%, rgba(22, 46, 75, 0.65), transparent 75%),
+      radial-gradient(ellipse 55% 32% at 8% 36%, rgba(13, 29, 49, 0.5), transparent 75%),
+      radial-gradient(ellipse 40% 22% at 57% 29%, rgba(132, 151, 169, 0.025), transparent 78%);
+  }
+  .space-stars { background: url('/hero/space-stars.svg') center top / cover no-repeat; }
+  .eclipse-atmosphere::after {
+    content: '';
+    background: linear-gradient(to bottom, rgba(7, 8, 9, 0) 0%, rgba(7, 8, 9, 0.12) 20%, rgba(7, 8, 9, 0.45) 45%, rgba(7, 8, 9, 0.85) 75%, #070809 100%);
+  }
+  @media (max-width: 699px) {
+    .space-stars { background-image: url('/hero/space-stars-mobile.svg'); }
   }
 }
