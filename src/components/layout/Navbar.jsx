@@ -1,99 +1,99 @@
-import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { FaBars, FaTimes } from "react-icons/fa";
 
-import {
-  FaBars,
-  FaTimes,
-} from "react-icons/fa";
+const navLinks = [
+  { name: "Inicio", to: "#hero" },
+  { name: "Sobre mí", to: "#about" },
+  { name: "Proyectos", to: "#projects" },
+  // Add #certificates only when at least one verified document can be published.
+  { name: "Contacto", to: "#contact" },
+];
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const toggleRef = useRef(null);
+  const navRef = useRef(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () =>
-      window.removeEventListener("scroll", handleScroll);
+    const handleScroll = () => setScrolled(window.scrollY > 50);
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const navLinks = [
-    { name: "Inicio", to: "#hero" },
-    { name: "Sobre mí", to: "#about" },
-    { name: "Tecnologías", to: "#technologies" },
-    { name: "Proyectos", to: "#projects" },
-    { name: "Contacto", to: "#contact" },
-  ];
+  useEffect(() => {
+    if (!isOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const siblings = [...navRef.current.parentElement.children]
+      .filter((element) => element !== navRef.current)
+      .map((element) => ({ element, inert: element.inert }));
+    siblings.forEach(({ element }) => { element.inert = true; });
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        setIsOpen(false);
+        toggleRef.current?.focus();
+      }
+      if (event.key === "Tab") {
+        const controls = [...navRef.current.querySelectorAll("a[href], button")]
+          .filter((element) => element.getClientRects().length > 0);
+        const first = controls[0];
+        const last = controls[controls.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
+    };
+    const desktop = window.matchMedia("(min-width: 1024px)");
+    const closeOnDesktop = () => { if (desktop.matches) setIsOpen(false); };
+    document.addEventListener("keydown", handleKeyDown);
+    desktop.addEventListener("change", closeOnDesktop);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      siblings.forEach(({ element, inert }) => { element.inert = inert; });
+      document.removeEventListener("keydown", handleKeyDown);
+      desktop.removeEventListener("change", closeOnDesktop);
+    };
+  }, [isOpen]);
+
+  const closeMenu = (destination) => {
+    setIsOpen(false);
+    window.requestAnimationFrame(() => {
+      const target = document.querySelector(destination);
+      if (target) {
+        target.setAttribute("tabindex", "-1");
+        target.focus({ preventScroll: true });
+      }
+    });
+  };
 
   return (
-    <motion.nav
-      initial={{ y: -80 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.6 }}
-      className={`fixed top-0 left-0 w-full z-50 backdrop-blur-md border-b transition-all duration-300 ${
-        scrolled
-          ? "bg-[#020617]/88 border-white/10 shadow-2xl shadow-blue-950/20"
-          : "bg-transparent border-transparent py-4"
-      }`}
-    >
-      <div
-        className="
-        max-w-7xl mx-auto
-        px-6 py-4 flex items-center justify-between
-        "
-      >
-        <h1 className="text-2xl font-bold tracking-tight">
-          Portfolio
-          <span className="text-[#c3c4c5]">
-            Leo
-          </span>
-        </h1>
-
-        <ul className="hidden lg:flex gap-8 text-gray-300 font-medium">
-          {navLinks.map((link) => (
-            <li key={link.to}>
-              <a
-                href={link.to}
-                className="nav-link"
-              >
-                {link.name}
-              </a>
-            </li>
-          ))}
+    <nav ref={navRef} className={`portfolio-navigation ${scrolled ? "is-scrolled" : ""} ${isOpen ? "is-open" : ""}`} aria-label="Navegación principal">
+      <div className="navigation-inner">
+        <p className="navigation-brand">Portfolio<span>Leo</span></p>
+        <ul className="navigation-desktop">
+          {navLinks.map((link) => <li key={link.to}><a href={link.to}>{link.name}</a></li>)}
         </ul>
-
-        <button
-          className="lg:hidden text-2xl"
-          onClick={() => setIsOpen(!isOpen)}
-          aria-label="Abrir menú"
-          type="button"
-        >
-          {isOpen ? <FaTimes /> : <FaBars />}
+        <button ref={toggleRef} className="navigation-toggle" onClick={() => setIsOpen(!isOpen)}
+          aria-label={isOpen ? "Cerrar menú" : "Abrir menú"} aria-expanded={isOpen}
+          aria-controls="navigation-mobile" type="button">
+          {isOpen ? <FaTimes aria-hidden="true" /> : <FaBars aria-hidden="true" />}
         </button>
       </div>
-
-      {isOpen && (
-        <div className="lg:hidden bg-[#0F172A] border-t border-white/10">
-          <ul className="flex flex-col items-center py-8 gap-8">
-            {navLinks.map((link) => (
-              <li key={link.to}>
-                <a
-                  href={link.to}
-                  onClick={() => setIsOpen(false)}
-                  className="text-lg hover:text-blue-400 transition"
-                >
-                  {link.name}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-    </motion.nav>
+      <div id="navigation-mobile" className="navigation-mobile" hidden={!isOpen}>
+        <ul>
+          {navLinks.map((link) => <li key={link.to}><a href={link.to} onClick={() => closeMenu(link.to)}>{link.name}</a></li>)}
+          <li className="navigation-whatsapp"><a href="https://wa.me/5491133849214" target="_blank" rel="noopener noreferrer">
+            Contactar por WhatsApp<span className="sr-only"> (abre en otra pestaña)</span>
+          </a></li>
+        </ul>
+      </div>
+    </nav>
   );
 }
 

@@ -1,9 +1,7 @@
 import Navbar from "./components/layout/Navbar";
 import Hero from "./sections/Hero";
 import About from "./sections/About";
-import Technologies from "./sections/Technologies";
 import Projects from "./sections/Projects";
-import GithubStats from "./sections/GithubStats";
 import Contact from "./sections/Contact";
 
 import Footer from "./components/layout/Footer";
@@ -42,11 +40,9 @@ if (loading) {
 
       <About />
 
-      <Technologies />
 
       <Projects />
 
-      <GithubStats />
 
       <Contact />
 
