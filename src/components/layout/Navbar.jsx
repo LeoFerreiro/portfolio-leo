@@ -4,8 +4,8 @@ import { FaBars, FaTimes } from "react-icons/fa";
 const navLinks = [
   { name: "Inicio", to: "#hero" },
   { name: "Sobre mí", to: "#about" },
+  { name: "Certificados", to: "#certificates" },
   { name: "Proyectos", to: "#projects" },
-  // Add #certificates only when at least one verified document can be published.
   { name: "Contacto", to: "#contact" },
 ];
 
