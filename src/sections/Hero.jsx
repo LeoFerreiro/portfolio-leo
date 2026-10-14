@@ -38,9 +38,9 @@ function Hero() {
           </h1>
           <p className="eclipse-role">Full Stack Developer</p>
           <p className="eclipse-intro">
-            Ayudo a negocios y emprendedores a transformar ideas en productos
-            digitales modernos, rápidos y escalables utilizando React, Node.js y
-            tecnologías actuales.
+            Desarrollo interfaces y aplicaciones web con React y Node.js.
+            Comparto proyectos personales con atención al diseño, la experiencia
+            de usuario y el código.
           </p>
           <div className="eclipse-actions">
             <a href="#projects" className="eclipse-cta eclipse-cta-primary">

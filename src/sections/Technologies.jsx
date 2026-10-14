@@ -21,7 +21,7 @@ function Technologies() {
     <div id="technologies" className="about-capabilities" tabIndex={-1} aria-labelledby="capabilities-title">
       <div className="about-capabilities-heading">
         <h3 id="capabilities-title">Capacidades y tecnologías</h3>
-        <p>Un recorrido por las herramientas presentes en mis proyectos.</p>
+        <p>Herramientas y tecnologías que utilizo en proyectos personales y de formación.</p>
       </div>
       <div>
         {capabilities.map((capability, index) => (

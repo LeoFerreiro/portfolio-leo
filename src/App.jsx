@@ -36,15 +36,12 @@ if (loading) {
 
       <Navbar />
 
-      <Hero />
-
-      <About />
-
-
-      <Projects />
-
-
-      <Contact />
+      <main id="main-content">
+        <Hero />
+        <About />
+        <Projects />
+        <Contact />
+      </main>
 
       <Footer />
 

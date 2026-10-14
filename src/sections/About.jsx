@@ -11,8 +11,8 @@ function About() {
           </div>
           <div className="about-introduction">
             <p className="about-lead">
-              Soy Leonardo Ferreiro. Desarrollo interfaces y aplicaciones web
-              con React, Node.js y MongoDB.
+              Soy Leonardo Ferreiro, Full Stack Developer. Desarrollo interfaces
+              y aplicaciones web con React y Node.js.
             </p>
             <p>
               Trabajo en proyectos personales que combinan desarrollo frontend
