@@ -1,163 +1,135 @@
-import { motion } from "framer-motion";
-import { FaGithub } from "react-icons/fa";
-import { FiExternalLink } from "react-icons/fi";
-
-const projects = [
-  {
-    title: "VerdeStore",
-    description:
-      "E-commerce moderno desarrollado con React, Context API, React Router, TailwindCSS y Framer Motion. Incluye catálogo dinámico, carrito lateral animado, checkout, filtros, búsqueda y modo oscuro.",
-    technologies: [
-      "React",
-      "TailwindCSS",
-      "Context API",
-      "Framer Motion",
-      "Vite",
-    ],
-    image: "/leostore.png",
-    demo: "https://storeleo.vercel.app/",
-    github: "https://github.com/LeoFerreiro/ecommerce-leo",
-  },
-  {
-    title: "Task Manager App",
-    description:
-      "Aplicación full stack para gestión de tareas con autenticación y persistencia de datos.",
-    technologies: ["React", "Express", "MongoDB"],
-    image: "/taskflowleo.png",
-    demo: "https://taskleodemo.vercel.app/",
-    github: "https://github.com/LeoFerreiro/taskflow",
-  },
-  {
-    title: "Business Landing Page",
-    description:
-      "Landing page premium enfocada en negocios modernos con diseño creativo y animaciones suaves.",
-    technologies: ["React", "Tailwind", "Framer Motion"],
-    image:
-      "/blpleo.png",
-      demo: "https://blp-leo.vercel.app/",
-      github:"https://github.com/LeoFerreiro/blp-leo",
-  },
-  {
-    title: "NocheViva",
-    description:
-      "Ticketera demo para recitales y shows en vivo con cola virtual, registro validado, checkout simulado, panel de usuario, Mis tickets y flujo de arrepentimiento de compra sin persistencia de datos.",
-    technologies: ["HTML", "CSS", "JavaScript", "Vercel"],
-    image: "/buyticket.png",
-    demo: "https://buytecket-leo.vercel.app/",
-    github: "https://github.com/LeoFerreiro/buyticket-leo",
-  },
-];
+import { useEffect } from "react";
+import { projects, projectCategories, projectStatuses } from "../data/projects";
 
 function Projects() {
+  useEffect(() => {
+    const hash = window.location.hash;
+    const destinations = ["#projects", ...projects.map((project) => `#${project.id}`)];
+    if (!destinations.includes(hash)) return;
+    let cancelled = false;
+    let frame;
+    document.fonts.ready.then(() => {
+      if (cancelled || window.location.hash !== hash) return;
+      frame = window.requestAnimationFrame(() => {
+        if (cancelled || window.location.hash !== hash) return;
+        document.getElementById(hash.slice(1))?.scrollIntoView({ behavior: "instant", block: "start" });
+      });
+    });
+    return () => {
+      cancelled = true;
+      if (frame !== undefined) window.cancelAnimationFrame(frame);
+    };
+  }, []);
+  const featured = projects.find((project) => project.featured);
+  const remaining = projects.filter((project) => !project.featured);
+
   return (
-    <section
-      id="projects"
-      className="min-h-screen flex flex-col text-center items-center px-6 py-24"
-    >
-      <div className="w-full max-w-7xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 80 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="mb-20 flex flex-col items-center text-center"
-        >
-          <p className="text-blue-400 font-semibold mb-4">
-            Proyectos
-          </p>
+    <section id="projects" className="editorial-projects" aria-labelledby="projects-title">
+      <div className="projects-page">
+        <header className="projects-opening">
+          <div>
+            <p className="projects-kicker">Selección de trabajo</p>
+            <h2 id="projects-title">Proyectos.</h2>
+          </div>
+          <p>Interfaces y aplicaciones de demostración. Un recorrido por su propósito, el código y las decisiones que les dan forma.</p>
+        </header>
 
-          <h2 className="text-4xl md:text-5xl font-bold">
-            Mis Proyectos Destacados
-          </h2>
-
-          <p className="text-gray-400 mt-6 max-w-2xl mx-auto">
-            Algunos proyectos desarrollados enfocados en diseño moderno,
-            experiencia de usuario y desarrollo full stack.
-          </p>
-        </motion.div>
-
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project, index) => (
-            <motion.div
-              key={project.title}
-              initial={{ opacity: 0, y: 80 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{
-                duration: 0.7,
-                delay: index * 0.2,
-              }}
-              viewport={{ once: true }}
-              whileHover={{ y: -10 }}
-              className="group relative"
-            >
-              <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-blue-500/20 to-purple-500/20 blur-xl opacity-0 group-hover:opacity-100 transition" />
-
-              <div className="relative bg-[#111827]/80 border border-white/10 rounded-3xl overflow-hidden backdrop-blur-md flex flex-col h-full hover-card">
-                <div className="overflow-hidden">
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-52 object-cover group-hover:scale-105 transition duration-500"
-                  />
-                </div>
-
-                <div className="p-8 flex flex-col flex-1">
-                  <h3 className="text-2xl font-bold mb-4">
-                    {project.title}
-                  </h3>
-
-                  <p className="text-gray-400 leading-7">
-                    {project.description}
-                  </p>
-
-                  <div className="flex flex-wrap gap-3 mt-6">
-                    {project.technologies.map((tech) => (
-                      <span
-                        key={tech}
-                        className="px-4 py-2 rounded-full bg-blue-500/10 border border-blue-400/20 text-blue-300 text-sm"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-
-                  {(project.demo || project.github) && (
-                    <div className="flex flex-wrap gap-4 mt-auto pt-8">
-                      {project.demo && (
-                        <a
-                          href={project.demo}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="flex items-center gap-2 px-5 py-3 rounded-full bg-blue-500 hover:bg-blue-600 transition font-medium"
-                        >
-                          <FiExternalLink />
-                          Demo
-                        </a>
-                      )}
-
-                      {project.github && (
-                        <a
-                          href={project.github}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="flex items-center gap-2 px-5 py-3 rounded-full border border-white/10 hover:border-blue-400 transition font-medium"
-                        >
-                          <FaGithub />
-                          GitHub
-                        </a>
-                      )}
-                    </div>
-                  )}
-                </div>
+        <article className="project-case" id={featured.id} aria-labelledby="featured-project-title">
+          <header className="case-heading">
+            <div>
+              <p className="case-category"><span aria-hidden="true">01 / </span>{projectCategories[featured.category]}</p>
+              <h3 id="featured-project-title">{featured.title}</h3>
+              <p className="case-summary">{featured.description}</p>
+            </div>
+            <div className="case-status-and-links">
+              <p className="case-status">{projectStatuses[featured.status]}</p>
+              <div className="case-links">
+                <a href={featured.demo} target="_blank" rel="noopener noreferrer">Ver demo<span className="sr-only"> de {featured.title} (abre en otra pestaña)</span></a>
+                <a href={featured.github} target="_blank" rel="noopener noreferrer">Repositorio<span className="sr-only"> de {featured.title} (abre en otra pestaña)</span></a>
               </div>
-            </motion.div>
-          ))}
+            </div>
+          </header>
+          <figure className="case-image">
+            <img src={featured.imageDefault} srcSet={featured.imageSources}
+              sizes="(max-width: 599px) calc(100vw - 48px), (max-width: 1099px) calc(100vw - 80px), (max-width: 1439px) calc(100vw - 160px), 1280px"
+              width={featured.imageWidth} height={featured.imageHeight} alt={featured.imageAlt}
+              loading="lazy" decoding="async" />
+            <figcaption>
+              <span>Vista del inicio · Captura real de la demo</span>
+              <a href={featured.image} target="_blank" rel="noopener noreferrer">Ampliar captura<span className="sr-only"> de {featured.title} (abre en otra pestaña)</span></a>
+            </figcaption>
+          </figure>
+          <div className="case-overview">
+            <div><h4>Propósito</h4><p>{featured.purpose}</p></div>
+            <div><h4>Alcance implementado</h4><ul>{featured.features.map((feature) => <li key={feature}>{feature}</li>)}</ul></div>
+          </div>
+          <div className="case-decisions">
+            <h4>Decisiones técnicas</h4>
+            <dl>{featured.decisions.map((decision) => <div key={decision.title}><dt>{decision.title}</dt><dd>{decision.text}</dd></div>)}</dl>
+          </div>
+          <div className="case-technology-row">
+            <h4>Tecnologías</h4>
+            <ul>{featured.technologies.map((technology) => <li key={technology}>{technology}</li>)}</ul>
+          </div>
+          <div className="case-boundaries">
+            <h4>Una compra simulada</h4>
+            <p>{featured.limitations}</p>
+            <p className="case-evidence-note">Alcance revisado en el código del proyecto. El funcionamiento de la demo online no pudo comprobarse.</p>
+          </div>
+        </article>
+
+        <div className="projects-additional-cases">
+          {remaining.map((project, index) => <EditorialCase key={project.id} project={project} index={index + 2} />)}
         </div>
       </div>
     </section>
   );
 }
 
+function EditorialCase({ project, index }) {
+  const titleId = `${project.id}-title`;
+  return (
+    <article id={project.id} className={`project-case project-case-secondary case-${project.layout}`} aria-labelledby={titleId}>
+      <header className="case-heading">
+        <div>
+          <p className="case-category"><span aria-hidden="true">0{index} / </span>{projectCategories[project.category]}</p>
+          <h3 id={titleId}>{project.title}</h3>
+          <p className="case-summary">{project.description}</p>
+        </div>
+        <div className="case-status-and-links">
+          <p className="case-status">{projectStatuses[project.status]}</p>
+          <div className="case-links">
+            <a href={project.demo} target="_blank" rel="noopener noreferrer">Ver demo<span className="sr-only"> de {project.title} (abre en otra pestaña)</span></a>
+            <a href={project.github} target="_blank" rel="noopener noreferrer">Repositorio<span className="sr-only"> de {project.title} (abre en otra pestaña)</span></a>
+          </div>
+        </div>
+      </header>
+      <div className="case-media-and-overview">
+        <figure className="case-image">
+          <img src={project.imageDefault} srcSet={project.imageSources}
+            sizes={project.layout === "wide"
+              ? "(max-width: 599px) calc(100vw - 48px), (max-width: 1099px) calc(100vw - 80px), (max-width: 1439px) calc(100vw - 160px), 1280px"
+              : "(max-width: 599px) calc(100vw - 48px), (max-width: 1099px) calc(100vw - 80px), (max-width: 1439px) calc((100vw - 208px) * 0.667), 821px"}
+            width={project.imageWidth} height={project.imageHeight} style={{ aspectRatio: `${project.imageWidth} / ${project.imageHeight}` }}
+            alt={project.imageAlt} loading="lazy" decoding="async" />
+          <figcaption><span>Captura real · Interfaz de demostración</span><a href={project.image} target="_blank" rel="noopener noreferrer">Ampliar captura<span className="sr-only"> de {project.title} (abre en otra pestaña)</span></a></figcaption>
+        </figure>
+        <div className="case-overview">
+          <div><h4>Propósito</h4><p>{project.purpose}</p></div>
+          <div><h4>Alcance implementado</h4><ul>{project.features.map((feature) => <li key={feature}>{feature}</li>)}</ul></div>
+        </div>
+      </div>
+      <div className="case-decisions">
+        <h4>Decisiones técnicas</h4>
+        <dl>{project.decisions.map((decision) => <div key={decision.title}><dt>{decision.title}</dt><dd>{decision.text}</dd></div>)}</dl>
+      </div>
+      <div className="case-technology-row"><h4>Tecnologías</h4><ul>{project.technologies.map((technology) => <li key={technology}>{technology}</li>)}</ul></div>
+      <div className="case-boundaries">
+        <h4>{project.limitationTitle}</h4><p>{project.limitations}</p>
+        <p className="case-evidence-note">Alcance revisado en el código del proyecto. El funcionamiento de la demo online no pudo comprobarse.</p>
+      </div>
+    </article>
+  );
+}
+
 export default Projects;
-
-

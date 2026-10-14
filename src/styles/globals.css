@@ -590,3 +590,96 @@
     .floating-whatsapp { display: none; }
   }
 }
+
+/* Projects: one editorial case, followed by the three existing demo cards. */
+@layer components {
+  .editorial-projects { position: relative; isolation: isolate; background: #070809; color: #f2f1ed; font-family: 'Poppins Eclipse', sans-serif; padding: 112px 80px 96px; scroll-margin-top: 24px; }
+  .projects-page { max-width: 1280px; margin-inline: auto; }
+  .projects-opening { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 24px; align-items: end; margin-bottom: 80px; }
+  .projects-opening > div { grid-column: 1 / 7; }
+  .projects-kicker { font-size: 13px; color: #afb3b5; margin-bottom: 24px; letter-spacing: 0.045em; }
+  .projects-opening h2 { font-size: clamp(44px, 4.65vw, 68px); font-weight: 600; line-height: 1.12; letter-spacing: -0.055em; }
+  .projects-opening > p { grid-column: 8 / -1; font-size: 17px; line-height: 1.75; color: #b9bdc0; }
+  .project-case { border-top: 1px solid #353a3e; padding-top: 32px; scroll-margin-top: 24px; }
+  .case-heading { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 48px; }
+  .case-category { color: #afb3b5; font-size: 13px; letter-spacing: 0.045em; margin-bottom: 20px; }
+  .case-heading h3 { font-size: clamp(32px, 3.1vw, 46px); line-height: 1.15; font-weight: 600; letter-spacing: -0.045em; }
+  .case-summary { max-width: 55ch; font-size: 18px; line-height: 1.7; color: #b9bdc0; margin-top: 20px; }
+  .case-status-and-links { padding-top: 4px; }
+  .case-status { font-size: 13px; color: #b9bdc0; margin-bottom: 20px; }
+  .case-links { display: flex; flex-wrap: wrap; gap: 12px 24px; }
+  .project-case a { min-height: 44px; display: inline-flex; align-items: center; font-size: 14px; text-decoration: underline; text-underline-offset: 6px; }
+  .editorial-projects a:focus-visible { outline: 2px solid #f2f1ed; outline-offset: 4px; }
+  .case-image { margin-top: 40px; }
+  .case-image img { display: block; width: 100%; height: auto; aspect-ratio: 1904 / 943; object-fit: contain; }
+  .case-image figcaption { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 12px; color: #afb3b5; font-size: 12px; line-height: 1.6; }
+  .case-overview { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 80px; margin-top: 48px; }
+  .project-case h4 { font-size: 18px; font-weight: 500; line-height: 1.5; margin-bottom: 16px; }
+  .case-overview p, .case-overview li, .case-decisions dd, .case-boundaries > p { font-size: 16px; line-height: 1.75; color: #b9bdc0; }
+  .case-overview ul { list-style: disc; padding-left: 20px; }
+  .case-overview li + li { margin-top: 8px; }
+  .case-decisions { margin-top: 48px; }
+  .case-decisions dl > div { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 48px; border-top: 1px solid #353a3e; padding: 24px 0; }
+  .case-decisions dt { font-size: 17px; font-weight: 500; line-height: 1.6; }
+  .case-technology-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 48px; border-top: 1px solid #353a3e; padding-top: 24px; }
+  .case-technology-row ul { display: flex; flex-wrap: wrap; gap: 8px 24px; list-style: none; font-size: 16px; line-height: 1.75; }
+  .case-boundaries { margin-top: 40px; max-width: 76ch; }
+  .case-boundaries .case-evidence-note { margin-top: 16px; font-size: 13px; color: #afb3b5; }
+  @media (max-width: 1099px) {
+    .editorial-projects { padding: 88px 40px 80px; }
+    .projects-opening { margin-bottom: 56px; }
+    .projects-opening > p { grid-column: 7 / -1; }
+    .case-heading, .case-decisions dl > div, .case-technology-row { gap: 32px; }
+    .case-overview { gap: 40px; }
+  }
+  @media (max-width: 799px) {
+    .projects-opening { grid-template-columns: 1fr; gap: 24px; }
+    .projects-opening > div, .projects-opening > p { grid-column: 1; }
+    .case-heading { grid-template-columns: 1fr; gap: 24px; }
+    .case-status { margin-bottom: 8px; }
+    .case-status-and-links { padding-top: 0; }
+    .case-overview { grid-template-columns: 1fr; gap: 28px; }
+    .case-decisions dl > div, .case-technology-row { grid-template-columns: 1fr; gap: 12px; }
+    .case-technology-row h4 { margin-bottom: 0; }
+  }
+  @media (max-width: 599px) {
+    .editorial-projects { padding: 64px 24px; }
+    .projects-opening { margin-bottom: 40px; }
+    .projects-opening h2 { font-size: 38px; }
+    .projects-opening > p, .case-summary { font-size: 16px; }
+    .project-case { padding-top: 24px; }
+    .case-image { margin-top: 24px; }
+    .case-image figcaption { align-items: flex-start; flex-direction: column; gap: 4px; }
+    .case-overview, .case-decisions { margin-top: 32px; }
+    .case-decisions dl > div { padding: 20px 0; }
+    .case-boundaries { margin-top: 32px; }
+  }
+}
+
+/* Case rhythm: left media, right media, then a full-width final image. */
+@layer components {
+  .project-case-secondary { margin-top: 88px; padding-top: 40px; }
+  .case-media-and-overview { margin-top: 40px; }
+  .project-case-secondary .case-image { margin-top: 0; }
+  .case-wide .case-overview { grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); }
+  @media (min-width: 1100px) {
+    .case-split .case-media-and-overview,
+    .case-split-reverse .case-media-and-overview { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 24px; align-items: start; }
+    .case-split .case-image { grid-column: 1 / 9; grid-row: 1; }
+    .case-split .case-overview { grid-column: 9 / -1; grid-row: 1; }
+    .case-split-reverse .case-image { grid-column: 5 / -1; grid-row: 1; }
+    .case-split-reverse .case-overview { grid-column: 1 / 5; grid-row: 1; }
+    .case-split .case-overview,
+    .case-split-reverse .case-overview { display: grid; grid-template-columns: 1fr; gap: 28px; margin-top: 0; }
+    .case-split .case-image figcaption,
+    .case-split-reverse .case-image figcaption { align-items: flex-start; flex-direction: column; gap: 4px; }
+  }
+  @media (max-width: 799px) {
+    .case-wide .case-overview { grid-template-columns: 1fr; }
+    .project-case-secondary { margin-top: 64px; padding-top: 32px; }
+  }
+  @media (max-width: 599px) {
+    .project-case-secondary { margin-top: 48px; padding-top: 24px; }
+    .case-media-and-overview { margin-top: 24px; }
+  }
+}
