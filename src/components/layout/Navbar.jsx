@@ -48,7 +48,7 @@ function Navbar() {
       >
         <h1 className="text-2xl font-bold tracking-tight">
           Portfolio
-          <span className="text-blue-500">
+          <span className="text-[#c3c4c5]">
             Leo
           </span>
         </h1>

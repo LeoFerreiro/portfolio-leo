@@ -1,179 +1,85 @@
-import { motion } from "framer-motion";
-import { TypeAnimation } from "react-type-animation";
-import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { useEffect, useRef } from "react";
 import HeroScene3D from "../components/ui/HeroScene3D";
+import { FaGithub, FaLinkedin, FaWhatsapp } from "react-icons/fa";
+import { FiArrowDownRight, FiArrowUpRight } from "react-icons/fi";
 
 function Hero() {
+  const heroRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      document.body.classList.toggle("eclipse-active", entry.isIntersecting);
+    }, { rootMargin: "-80px 0px 0px 0px" });
+    observer.observe(heroRef.current);
+    return () => {
+      observer.disconnect();
+      document.body.classList.remove("eclipse-active");
+    };
+  }, []);
+
   return (
-    <section
-      id="hero"
-      className="
-      relative min-h-screen overflow-hidden
-      flex items-center justify-center
-      px-6 pt-32 pb-24
-      "
-    >
-      <div
-        className="
-        absolute -top-64 -left-64
-        w-[900px] h-[900px]
-        rounded-full bg-blue-500/10
-        blur-[180px] pointer-events-none
-        "
-      />
-
-      <div
-        className="
-        absolute left-1/2 bottom-[-900px]
-        -translate-x-1/2
-        w-[2200px] h-[2200px]
-        rounded-full bg-purple-600/20
-        blur-[280px] pointer-events-none
-        "
-      />
-
-      <HeroScene3D />
-
-      <motion.div
-        initial={{ opacity: 0, y: 60 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1 }}
-        className="
-        relative z-10
-        w-full max-w-6xl
-        flex flex-col items-center
-        text-center
-        "
-      >
-        <div
-          className="
-          hero-availability-badge
-          inline-flex items-center gap-2
-          px-5 py-2 rounded-full
-          border border-violet-500/20
-          bg-violet-500/10
-          text-violet-300 text-sm font-medium
-          backdrop-blur-md mb-8
-          "
-        >
-          <span className="badge-pulse" />
-          Disponible para proyectos freelance
+    <section ref={heroRef} id="hero" className="eclipse-hero" aria-labelledby="eclipse-name">
+      <div className="eclipse-sky" aria-hidden="true" />
+      <div className="eclipse-moon" aria-hidden="true">
+        <div className="eclipse-moon-frame">
+          <picture>
+            <source media="(max-width: 699px)" srcSet="/hero/moon-render-mobile.webp" />
+            <img src="/hero/moon-render-desktop.webp" width="1600" height="1598" alt="" fetchPriority="high" decoding="async" />
+          </picture>
+          <HeroScene3D />
         </div>
-
-        <h1
-          className="
-          text-5xl sm:text-7xl md:text-8xl lg:text-[112px]
-          font-black leading-none
-          bg-gradient-to-r from-blue-400 via-cyan-300 to-violet-500
-          bg-clip-text text-transparent
-          "
-        >
-          Leonardo Ferreiro
-        </h1>
-
-        <div
-          className="
-          mt-8
-          text-xl md:text-3xl
-          font-semibold text-white
-          "
-        >
-          <TypeAnimation
-            sequence={[
-              "Full Stack Developer",
-              2500,
-              "React Developer",
-              2500,
-              "Frontend Specialist",
-              2500,
-              "Freelance Web Developer",
-              2500,
-            ]}
-            speed={50}
-            repeat={Infinity}
-          />
+      </div>
+      <div className="eclipse-layout">
+        <div className="eclipse-copy">
+          <p className="eclipse-availability">Disponible para proyectos freelance</p>
+          <h1 id="eclipse-name" className="eclipse-name">
+            <span>Leonardo</span>
+            <span>Ferreiro</span>
+          </h1>
+          <p className="eclipse-role">Full Stack Developer</p>
+          <p className="eclipse-intro">
+            Ayudo a negocios y emprendedores a transformar ideas en productos
+            digitales modernos, rápidos y escalables utilizando React, Node.js y
+            tecnologías actuales.
+          </p>
+          <div className="eclipse-actions">
+            <a href="#projects" className="eclipse-cta eclipse-cta-primary">
+              Ver Proyectos <FiArrowUpRight aria-hidden="true" />
+            </a>
+            <a href="#contact" className="eclipse-cta eclipse-cta-secondary">Contactarme</a>
+          </div>
+          <div className="eclipse-socials">
+            <a href="https://github.com/LeoFerreiro" target="_blank" rel="noopener noreferrer">
+              <FaGithub aria-hidden="true" /> <span>GitHub</span>
+            </a>
+            <a href="https://www.linkedin.com/in/leo-ferreiro" target="_blank" rel="noopener noreferrer">
+              <FaLinkedin aria-hidden="true" /> <span>LinkedIn</span>
+            </a>
+            <a href="https://wa.me/5491133849214" target="_blank" rel="noopener noreferrer">
+              <FaWhatsapp aria-hidden="true" /> <span>WhatsApp</span>
+            </a>
+          </div>
         </div>
-
-        <p
-          className="
-          max-w-[680px] mt-8
-          text-gray-300 text-lg md:text-xl
-          leading-9 text-center
-          "
-        >
-          Ayudo a negocios y emprendedores a transformar ideas en productos
-          digitales modernos, rápidos y escalables utilizando React, Node.js y
-          tecnologías actuales.
-        </p>
-
-        <div className="flex flex-col sm:flex-row gap-4 mt-12">
-          <a
-            href="#projects"
-            className="
-            hero-button-primary
-            px-8 py-4 rounded-full
-            text-white font-semibold transition
-            shadow-lg shadow-violet-600/30
-            "
-          >
-            Ver Proyectos
-          </a>
-
-          <a
-            href="#contact"
-            className="
-            hero-button-secondary
-            px-8 py-4 rounded-full
-            border border-white/10
-            transition font-semibold
-            "
-          >
-            Contactarme
-          </a>
+        <div className="eclipse-footnote">
+          <div className="eclipse-meta-group">
+            <p className="eclipse-meta-label">Especialidades</p>
+            <ul className="eclipse-specialties" aria-label="Especialidades">
+              {["React Developer", "Frontend Specialist", "Freelance Web Developer"].map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </div>
+          <div className="eclipse-meta-group">
+            <p className="eclipse-meta-label">Tecnologías</p>
+            <ul className="eclipse-stack" aria-label="Tecnologías">
+              {["React", "Node.js", "MongoDB", "TailwindCSS", "Framer Motion"].map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </div>
+          <a href="#about" className="eclipse-next">Sobre mí <FiArrowDownRight aria-hidden="true" /></a>
         </div>
-
-        <div className="flex gap-6 mt-12 text-3xl text-gray-400">
-          <a
-            href="https://github.com/LeoFerreiro"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-white hover:scale-110 transition"
-          >
-            <FaGithub />
-          </a>
-
-          <a
-            href="https://www.linkedin.com/in/leo-ferreiro"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-[#0A66C2] hover:scale-110 transition"
-          >
-            <FaLinkedin />
-          </a>
-        </div>
-
-        <div className="flex flex-wrap justify-center gap-3 mt-14">
-          {[
-            "React",
-            "Node.js",
-            "MongoDB",
-            "TailwindCSS",
-            "Framer Motion",
-          ].map((tech) => (
-            <span
-              key={tech}
-              className="
-              hero-tech-pill
-              px-4 py-2 rounded-full
-              bg-white/5 border border-white/10
-              text-sm text-gray-300
-              "
-            >
-              {tech}
-            </span>
-          ))}
-        </div>
-      </motion.div>
+      </div>
     </section>
   );
 }
