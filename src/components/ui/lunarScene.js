@@ -1,6 +1,6 @@
 import * as THREE from "three";
 
-/** A still, demand-rendered moon. This module is loaded only after the Hero is visible. */
+/** A demand-rendered moon with bounded, desktop-only pointer response. This module is loaded only after the Hero is visible. */
 export function mountLunarScene(host, { onReady, onError }) {
   const resources = new Set();
   const bitmaps = new Set();
@@ -18,6 +18,15 @@ export function mountLunarScene(host, { onReady, onError }) {
   let camera;
   let ready = false;
   let shaderFailed = false;
+  let moon;
+  let tiltX = 0;
+  let tiltY = 0;
+  let targetX = 0;
+  let targetY = 0;
+  let lastFrameTime = null;
+  const pointerMedia = window.matchMedia("(hover: hover) and (pointer: fine) and (min-width: 1024px)");
+  const reducedMedia = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const canInteract = () => pointerMedia.matches && !reducedMedia.matches;
 
   const own = (resource) => {
     resources.add(resource);
@@ -33,6 +42,11 @@ export function mountLunarScene(host, { onReady, onError }) {
     resizeObserver?.disconnect();
     visibilityObserver?.disconnect();
     document.removeEventListener("visibilitychange", handleVisibility);
+    window.removeEventListener("pointermove", handlePointer);
+    window.removeEventListener("blur", resetPointer);
+    document.removeEventListener("pointerleave", resetPointer);
+    pointerMedia.removeEventListener("change", handleMotionPreference);
+    reducedMedia.removeEventListener("change", handleMotionPreference);
     renderer?.domElement.removeEventListener("webglcontextlost", handleContextLost);
     renderer?.domElement.remove();
     resources.forEach((resource) => resource.dispose());
@@ -65,10 +79,19 @@ export function mountLunarScene(host, { onReady, onError }) {
 
   const requestRender = () => {
     if (stopped || !loaded || !inView || document.hidden || frame !== null) return;
-    frame = requestAnimationFrame(() => {
+    frame = requestAnimationFrame((time) => {
       frame = null;
       if (stopped || !inView || document.hidden) return;
       try {
+        const delta = lastFrameTime === null ? 16.67 : Math.min(time - lastFrameTime, 50);
+        lastFrameTime = time;
+        const blend = 1 - Math.exp(-delta / 110);
+        tiltX += (targetX - tiltX) * blend;
+        tiltY += (targetY - tiltY) * blend;
+        const settling = Math.abs(targetX - tiltX) + Math.abs(targetY - tiltY) > 0.00008;
+        if (!settling) { tiltX = targetX; tiltY = targetY; }
+        moon.rotation.x = tiltX;
+        moon.rotation.y = -Math.PI / 2 + tiltY;
         renderer.render(scene, camera);
         if (shaderFailed) {
           fail("shader-error");
@@ -79,11 +102,41 @@ export function mountLunarScene(host, { onReady, onError }) {
           ready = true;
           onReady();
         }
+        if (settling) requestRender();
+        else lastFrameTime = null;
       } catch {
         fail("render-error");
       }
     });
   };
+
+  function resetPointer() {
+    targetX = 0;
+    targetY = 0;
+    requestRender();
+  }
+
+  function handleMotionPreference() {
+    // Preference changes are immediate: reduced motion never eases towards neutral.
+    targetX = targetY = tiltX = tiltY = 0;
+    lastFrameTime = null;
+    requestRender();
+  }
+
+  function handlePointer(event) {
+    if (!ready || !canInteract() || event.pointerType !== "mouse" || !inView || document.hidden) return;
+    const hero = host.closest("#hero");
+    const bounds = hero?.getBoundingClientRect();
+    if (!bounds || event.clientY < bounds.top || event.clientY > bounds.bottom) {
+      resetPointer();
+      return;
+    }
+    const x = Math.max(-1, Math.min(1, (event.clientX - bounds.left) / bounds.width * 2 - 1));
+    const y = Math.max(-1, Math.min(1, (event.clientY - bounds.top) / bounds.height * 2 - 1));
+    targetX = y * 0.018;
+    targetY = x * 0.035;
+    requestRender();
+  }
 
   function handleVisibility() {
     if (document.hidden && frame !== null) {
@@ -158,7 +211,7 @@ export function mountLunarScene(host, { onReady, onError }) {
     if (renderer.capabilities.maxTextureSize < 1024) throw new Error("Insufficient texture capacity");
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.15;
+    renderer.toneMappingExposure = 1.08;
     renderer.setClearColor(0x000000, 0);
     renderer.domElement.setAttribute("aria-hidden", "true");
     renderer.domElement.addEventListener("webglcontextlost", handleContextLost);
@@ -178,18 +231,18 @@ export function mountLunarScene(host, { onReady, onError }) {
       color: 0xd9d9d9,
       roughness: 1,
       metalness: 0,
-      bumpScale: 0.025,
+      bumpScale: 0.045,
     }));
-    const moon = new THREE.Mesh(geometry, material);
+    moon = new THREE.Mesh(geometry, material);
     // Bring the near-side maria (middle of the equirectangular map) towards the camera.
     moon.rotation.y = -Math.PI / 2;
     moon.rotation.z = -0.08;
     scene.add(moon);
 
-    const sun = new THREE.DirectionalLight(0xf4f2ec, 3.1);
-    sun.position.set(-3.5, 1.1, 1.65);
+    const sun = new THREE.DirectionalLight(0xf4f2ec, 3.0);
+    sun.position.set(-3.5, 1.3, 1.45);
     scene.add(sun);
-    scene.add(new THREE.AmbientLight(0xdce1e8, 0.018));
+    scene.add(new THREE.AmbientLight(0xdce1e8, 0.012));
 
     resizeObserver = new ResizeObserver(resize);
     resizeObserver.observe(host);
@@ -203,6 +256,11 @@ export function mountLunarScene(host, { onReady, onError }) {
     });
     visibilityObserver.observe(host);
     document.addEventListener("visibilitychange", handleVisibility);
+    window.addEventListener("pointermove", handlePointer, { passive: true });
+    window.addEventListener("blur", resetPointer);
+    document.addEventListener("pointerleave", resetPointer);
+    pointerMedia.addEventListener("change", handleMotionPreference);
+    reducedMedia.addEventListener("change", handleMotionPreference);
     resize();
 
     const variant = smallMaps ? "1k" : "2k";
