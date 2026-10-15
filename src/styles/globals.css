@@ -808,3 +808,25 @@
     .space-stars { background-image: url('/hero/space-stars-mobile.svg'); }
   }
 }
+
+/* One short trail in the quiet upper-left corridor, behind all content. */
+@layer components {
+  .editorial-meteor {
+    --meteor-travel: clamp(72px, 10vw, 140px);
+    --meteor-drop: clamp(20px, 2.86vw, 40px);
+    position: absolute; top: 104px; left: max(64px, 6vw);
+    width: 48px; height: 1px; opacity: 0; pointer-events: none;
+    background: linear-gradient(90deg, transparent, rgba(218, 227, 237, 0.8));
+    transform: rotate(16deg); transform-origin: right center;
+  }
+  .editorial-meteor.is-visible { animation: editorial-meteor-pass 1000ms ease-out both; }
+  @keyframes editorial-meteor-pass {
+    0% { opacity: 0; transform: translate(0, 0) rotate(16deg); }
+    15% { opacity: 0.6; }
+    70% { opacity: 0.4; }
+    100% { opacity: 0; transform: translate(var(--meteor-travel), var(--meteor-drop)) rotate(16deg); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .editorial-meteor, .editorial-meteor.is-visible { animation: none; display: none; }
+  }
+}
