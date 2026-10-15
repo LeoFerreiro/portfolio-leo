@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import HeroScene3D from "../components/ui/HeroScene3D";
+import LunarVisual from "../components/ui/LunarVisual";
 import { FaGithub, FaLinkedin, FaWhatsapp } from "react-icons/fa";
 import { FiArrowDownRight, FiArrowUpRight } from "react-icons/fi";
 
@@ -21,11 +21,7 @@ function Hero() {
     <section ref={heroRef} id="hero" className="eclipse-hero" aria-labelledby="eclipse-name">
       <div className="eclipse-moon" aria-hidden="true">
         <div className="eclipse-moon-frame">
-          <picture>
-            <source media="(max-width: 699px)" srcSet="/hero/moon-render-mobile.webp" />
-            <img src="/hero/moon-render-desktop.webp" width="1600" height="1598" alt="" fetchPriority="high" decoding="async" />
-          </picture>
-          <HeroScene3D />
+          <LunarVisual />
         </div>
       </div>
       <div className="eclipse-layout">

@@ -1,7 +1,10 @@
 import { useEffect, useRef } from "react";
+import { useLunarState } from "./useLunarState";
+import { faintStarOpacity } from "./lunarState";
 
 /** Static shared sky with one infrequent, demand-scheduled meteor. */
 function ParticlesBackground() {
+  const { phase } = useLunarState();
   const meteorRef = useRef(null);
 
   useEffect(() => {
@@ -47,8 +50,8 @@ function ParticlesBackground() {
   }, []);
 
   return (
-    <div className="eclipse-atmosphere" aria-hidden="true">
-      <div className="space-stars" />
+    <div className="eclipse-atmosphere" aria-hidden="true" style={{ "--lunar-faint-opacity": faintStarOpacity(phase?.illuminatedFraction ?? 0) }}>
+      <div className="space-stars"><div className="space-stars-faint" /><div className="space-stars-main" /></div>
       <span ref={meteorRef} className="editorial-meteor" />
     </div>
   );

@@ -59,3 +59,9 @@ Stage 4.7.2.1 refines these same original procedural fields: increased upper-fie
 ## Lunar depth refinement (Stage 4.7.3)
 
 The existing equirectangular color/elevation maps are reused without downloads or edits. The two `moon-render-*.webp` fallbacks were regenerated from the neutral local Three.js scene after its bump and lighting adjustments, using Chromium/SwiftShader, the unchanged orthographic framing and 2k/1k maps respectively. Transparent PNG renders (1600×1598 and 640×639) were converted to grayscale, retaining alpha, then encoded as WebP quality 94, method 6. They represent the neutral scene; the small desktop pointer tilt is intentionally absent from the static fallback. Existing NASA SVS mirror provenance and direct-verification limitations remain applicable; no new verification or license claim is made.
+
+## Phase-coherent local fallback and adaptive star visibility (Stage 4.7.5.3)
+
+The dynamic Canvas2D view reuses the existing 1k lunar color/elevation maps without new external imagery. Neutral terrain UV orientation, framing, bump and lighting parameters are shared with Three.js; CPU shading is an approximation (scalar grayscale ACES/diffuse/rough specular and reduced bump detail at the limb), not a new physical source. Existing NASA/mirror provenance limitations remain unchanged. The prior moon-render WebP files are retained for traceability, but are no longer the active fallback. Astronomy Engine 2.1.19 license is retained at /licenses/astronomy-engine-MIT.txt.
+
+The four space-stars[-mobile]-main/faint.svg resources partition the original procedural fields by radius >=1.3 SVG units. All positions, radii, opacity and color attributes are unchanged; no stars were added or removed. Principal/faint counts: 122/1778 desktop, 43/807 mobile. Visibility modulation of the faint layer is an editorial approximation of lunar glare, not a physical change of stellar brightness.

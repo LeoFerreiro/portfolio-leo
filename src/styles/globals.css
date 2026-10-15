@@ -268,7 +268,7 @@
   .lunar-scene { position: absolute; inset: 0; pointer-events: none; }
   .lunar-scene canvas { display: block; width: 100%; height: 100%; visibility: hidden; filter: grayscale(1); }
   .lunar-scene[data-state="ready"] canvas { visibility: visible; }
-  .eclipse-moon-frame:has(.lunar-scene[data-state="ready"]) picture { visibility: hidden; }
+
   .eclipse-moon { mix-blend-mode: normal; }
 
   .eclipse-moon img {
@@ -799,13 +799,16 @@
       radial-gradient(ellipse 55% 32% at 8% 36%, rgba(13, 29, 49, 0.5), transparent 75%),
       radial-gradient(ellipse 40% 22% at 57% 29%, rgba(132, 151, 169, 0.025), transparent 78%);
   }
-  .space-stars { background: url('/hero/space-stars.svg') center top / cover no-repeat; }
+  .space-stars-faint, .space-stars-main { position: absolute; inset: 0; background: center top / cover no-repeat; pointer-events: none; }
+  .space-stars-faint { background-image: url('/hero/space-stars-faint.svg'); opacity: var(--lunar-faint-opacity, 1); }
+  .space-stars-main { background-image: url('/hero/space-stars-main.svg'); }
   .eclipse-atmosphere::after {
     content: '';
     background: linear-gradient(to bottom, rgba(7, 8, 9, 0) 0%, rgba(7, 8, 9, 0.12) 20%, rgba(7, 8, 9, 0.45) 45%, rgba(7, 8, 9, 0.85) 75%, #070809 100%);
   }
   @media (max-width: 699px) {
-    .space-stars { background-image: url('/hero/space-stars-mobile.svg'); }
+    .space-stars-faint { background-image: url('/hero/space-stars-mobile-faint.svg'); }
+    .space-stars-main { background-image: url('/hero/space-stars-mobile-main.svg'); }
   }
 }
 
@@ -829,4 +832,15 @@
   @media (prefers-reduced-motion: reduce) {
     .editorial-meteor, .editorial-meteor.is-visible { animation: none; display: none; }
   }
+}
+
+/* Phase-coherent lunar layers; no layout participation or crossfade of different phases. */
+@layer components {
+  .lunar-visual { position: absolute; inset: 0; pointer-events: none; }
+  .lunar-fallback { position: absolute; inset: 0; width: 100%; height: 100%; visibility: hidden; }
+  .lunar-fallback[data-ready="true"] { visibility: visible; }
+  .lunar-placeholder { position: absolute; width: 79.2%; aspect-ratio: 1; left: 12.4%; top: 11.35%; border-radius: 50%; background: #090a0b; }
+  .lunar-visual .lunar-scene canvas { visibility: hidden; }
+  .lunar-visual[data-show-3d="true"] .lunar-scene canvas { visibility: visible; }
+  .lunar-visual[data-show-3d="true"] .lunar-fallback { visibility: hidden; }
 }

@@ -1,7 +1,8 @@
 import * as THREE from "three";
+import { LUNAR_VISUAL as V } from "./lunarVisualConfig.js";
 
 /** A demand-rendered moon with bounded, desktop-only pointer response. This module is loaded only after the Hero is visible. */
-export function mountLunarScene(host, { onReady, onError }) {
+export function mountLunarScene(host, { onReady, onError, onFrame, initialPhase }) {
   const resources = new Set();
   const bitmaps = new Set();
   const abort = new AbortController();
@@ -11,6 +12,10 @@ export function mountLunarScene(host, { onReady, onError }) {
   let visibilityObserver;
   let frame = null;
   let loadTimer;
+  let currentPhase = initialPhase;
+  let lastPublishedFrame;
+  let sun;
+  let interaction;
   let stopped = false;
   let inView = true;
   let loaded = false;
@@ -90,8 +95,9 @@ export function mountLunarScene(host, { onReady, onError }) {
         tiltY += (targetY - tiltY) * blend;
         const settling = Math.abs(targetX - tiltX) + Math.abs(targetY - tiltY) > 0.00008;
         if (!settling) { tiltX = targetX; tiltY = targetY; }
-        moon.rotation.x = tiltX;
-        moon.rotation.y = -Math.PI / 2 + tiltY;
+        // Keep the approved terrain pose separate from its small pointer offset.
+        // The light remains in the observer frame, outside this interaction group.
+        interaction.rotation.set(tiltX, tiltY, 0);
         renderer.render(scene, camera);
         if (shaderFailed) {
           fail("shader-error");
@@ -101,6 +107,10 @@ export function mountLunarScene(host, { onReady, onError }) {
         if (!ready) {
           ready = true;
           onReady();
+        }
+        if (lastPublishedFrame !== currentPhase?.timestampMs) {
+          lastPublishedFrame = currentPhase?.timestampMs;
+          onFrame?.(lastPublishedFrame);
         }
         if (settling) requestRender();
         else lastFrameTime = null;
@@ -138,12 +148,25 @@ export function mountLunarScene(host, { onReady, onError }) {
     requestRender();
   }
 
+  function refreshIllumination(phase = currentPhase) {
+    currentPhase = phase;
+    if (stopped || !loaded || !phase) return;
+    try {
+      sun.position.fromArray(phase.solarDirection).multiplyScalar(5);
+      host.dataset.phaseTimestamp = String(phase.timestampMs);
+      host.dataset.illuminatedFraction = String(phase.illuminatedFraction);
+      host.dataset.solarDirection = JSON.stringify(phase.solarDirection);
+      requestRender();
+    } catch { fail("ephemeris-error"); }
+  }
+  dispose.updatePhase = refreshIllumination;
+
   function handleVisibility() {
     if (document.hidden && frame !== null) {
       cancelAnimationFrame(frame);
       frame = null;
     }
-    requestRender();
+    refreshIllumination();
   }
 
   const resize = () => {
@@ -156,12 +179,12 @@ export function mountLunarScene(host, { onReady, onError }) {
       renderer.setPixelRatio(dpr);
       renderer.setSize(width, height, false);
       // Matches the photograph's existing disk: centre 52% / 51%, radius 39.6%.
-      const horizontal = 2 / 0.792;
+      const horizontal = 2 / V.diameter;
       const vertical = horizontal * height / width;
-      camera.left = -0.52 * horizontal;
-      camera.right = 0.48 * horizontal;
-      camera.top = 0.51 * vertical;
-      camera.bottom = -0.49 * vertical;
+      camera.left = -V.centerX * horizontal;
+      camera.right = (1 - V.centerX) * horizontal;
+      camera.top = V.centerY * vertical;
+      camera.bottom = -(1 - V.centerY) * vertical;
       camera.updateProjectionMatrix();
       host.dataset.dpr = String(dpr);
       requestRender();
@@ -211,7 +234,7 @@ export function mountLunarScene(host, { onReady, onError }) {
     if (renderer.capabilities.maxTextureSize < 1024) throw new Error("Insufficient texture capacity");
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.08;
+    renderer.toneMappingExposure = V.exposure;
     renderer.setClearColor(0x000000, 0);
     renderer.domElement.setAttribute("aria-hidden", "true");
     renderer.domElement.addEventListener("webglcontextlost", handleContextLost);
@@ -228,21 +251,22 @@ export function mountLunarScene(host, { onReady, onError }) {
     const detail = mobile ? [48, 32] : [96, 64];
     const geometry = own(new THREE.SphereGeometry(1, ...detail));
     const material = own(new THREE.MeshStandardMaterial({
-      color: 0xd9d9d9,
+      color: V.color,
       roughness: 1,
       metalness: 0,
-      bumpScale: 0.045,
+      bumpScale: V.bumpScale,
     }));
     moon = new THREE.Mesh(geometry, material);
     // Bring the near-side maria (middle of the equirectangular map) towards the camera.
-    moon.rotation.y = -Math.PI / 2;
-    moon.rotation.z = -0.08;
-    scene.add(moon);
+    moon.rotation.y = V.baseY;
+    moon.rotation.z = V.baseZ;
+    interaction = new THREE.Group();
+    interaction.add(moon);
+    scene.add(interaction);
 
-    const sun = new THREE.DirectionalLight(0xf4f2ec, 3.0);
-    sun.position.set(-3.5, 1.3, 1.45);
+    sun = new THREE.DirectionalLight(0xf4f2ec, V.sunIntensity);
     scene.add(sun);
-    scene.add(new THREE.AmbientLight(0xdce1e8, 0.012));
+    scene.add(new THREE.AmbientLight(0xdce1e8, V.ambientIntensity));
 
     resizeObserver = new ResizeObserver(resize);
     resizeObserver.observe(host);
@@ -252,7 +276,7 @@ export function mountLunarScene(host, { onReady, onError }) {
         cancelAnimationFrame(frame);
         frame = null;
       }
-      requestRender();
+      refreshIllumination();
     });
     visibilityObserver.observe(host);
     document.addEventListener("visibilitychange", handleVisibility);
@@ -278,7 +302,7 @@ export function mountLunarScene(host, { onReady, onError }) {
       renderer.initTexture(map);
       renderer.initTexture(bumpMap);
       loaded = true;
-      requestRender();
+      refreshIllumination();
     }).catch(() => fail("texture-error"));
   } catch {
     fail("initialization-error");
