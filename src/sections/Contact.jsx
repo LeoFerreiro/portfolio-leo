@@ -54,7 +54,7 @@ function Contact() {
     try {
       await emailjs.sendForm(
         "service_bnuwkni",
-        "template_no4bfo4",
+        "template_k1a42st",
         form.current,
         "7Qydx-qRhje9FjKOe"
       );
